@@ -136,10 +136,7 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # --- CORS Setup ---
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000", # Allows your local Next.js environment
-    # "https://your-vercel-domain.vercel.app", # Uncomment and add this when Vercel is live
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 # --- Cloudinary Setup ---
 cloudinary.config(
