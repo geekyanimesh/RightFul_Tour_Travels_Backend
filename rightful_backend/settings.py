@@ -121,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -157,9 +157,5 @@ DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
 # The list of 4-5 admin emails that should receive the leads
 ADMIN_NOTIFICATION_EMAILS = [
-    'admin1@example.com',
-    'admin2@example.com',
-    'admin3@example.com',
-    'admin4@example.com',
-    'admin5@example.com'
+    'kumaranimesh2004@gmail.com'
 ]

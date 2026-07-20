@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Package, Enquiry, ContactMessage, GalleryImage, Testimonial, SiteAnnouncement
+from .models import Package, Enquiry, ContactMessage, GalleryImage, Testimonial, SiteAnnouncement, CustomQuote
 
 class PackageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -29,4 +29,9 @@ class TestimonialSerializer(serializers.ModelSerializer):
 class SiteAnnouncementSerializer(serializers.ModelSerializer):
     class Meta:
         model = SiteAnnouncement
+        fields = '__all__'
+
+class CustomQuoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomQuote
         fields = '__all__'
