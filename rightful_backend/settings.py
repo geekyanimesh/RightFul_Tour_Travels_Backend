@@ -136,7 +136,15 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # --- CORS Setup ---
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://rightful-tour-travels.onrender.com",
+    "https://www.rightfultourandtravels.com",
+    "https://rightfultourandtravels.com"
+]
 
 # --- Cloudinary Setup ---
 cloudinary.config(
