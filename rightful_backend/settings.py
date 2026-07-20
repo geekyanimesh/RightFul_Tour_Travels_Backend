@@ -142,3 +142,24 @@ CORS_ALLOW_ALL_ORIGINS = True
 cloudinary.config(
     secure=True
 )
+
+# --- Email Settings (SMTP) ---
+# Using Gmail as an example. If using another provider, update the HOST and PORT.
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') # e.g., your_email@gmail.com
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') # e.g., your 16-digit app password
+
+# The email address that the system will use as the sender
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+
+# The list of 4-5 admin emails that should receive the leads
+ADMIN_NOTIFICATION_EMAILS = [
+    'admin1@example.com',
+    'admin2@example.com',
+    'admin3@example.com',
+    'admin4@example.com',
+    'admin5@example.com'
+]

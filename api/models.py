@@ -26,6 +26,7 @@ class Enquiry(models.Model):
     travel_dates = models.CharField(max_length=100)
     number_of_people = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField(max_length=254, default="client@example.com")
 
     def __str__(self):
         return f"{self.name} - {self.package.title}"
@@ -39,6 +40,7 @@ class ContactMessage(models.Model):
     phone = models.CharField(max_length=20)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField(max_length=254, default="client@example.com")
 
     def __str__(self):
         return f"{self.name} - {self.phone}"
