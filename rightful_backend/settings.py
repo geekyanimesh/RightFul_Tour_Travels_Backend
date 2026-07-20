@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     
     # Local Apps
     'api',
+    'anymail',
 ]
 
 MIDDLEWARE = [
@@ -151,19 +152,18 @@ cloudinary.config(
     secure=True
 )
 
-# --- Email Settings (SMTP) ---
-# Using Gmail as an example. If using another provider, update the HOST and PORT.
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') # e.g., your_email@gmail.com
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') # e.g., your 16-digit app password
+# --- Email Settings (HTTP API Bypass for Render) ---
+EMAIL_BACKEND = "anymail.backends.resend.EmailBackend"
 
-# The email address that the system will use as the sender
-DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+ANYMAIL = {
+    "RESEND_API_KEY": os.environ.get("RESEND_API_KEY"),
+}
 
-# The list of 4-5 admin emails that should receive the leads
+# For unverified domains on Resend, you MUST send FROM this exact email:
+DEFAULT_FROM_EMAIL = "onboarding@resend.dev"
+
+# Because you are using the testing sandbox, it will only deliver emails TO 
+# the email address you used to sign up for Resend.
 ADMIN_NOTIFICATION_EMAILS = [
-    'kumaranimesh2004@gmail.com'
+    'kumaranimesh2004@gmail.com' 
 ]
