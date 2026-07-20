@@ -121,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -136,12 +136,26 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # --- CORS Setup ---
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000", # Allows your local Next.js environment
-    # "https://your-vercel-domain.vercel.app", # Uncomment and add this when Vercel is live
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 # --- Cloudinary Setup ---
 cloudinary.config(
     secure=True
 )
+
+# --- Email Settings (SMTP) ---
+# Using Gmail as an example. If using another provider, update the HOST and PORT.
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') # e.g., your_email@gmail.com
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') # e.g., your 16-digit app password
+
+# The email address that the system will use as the sender
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+
+# The list of 4-5 admin emails that should receive the leads
+ADMIN_NOTIFICATION_EMAILS = [
+    'kumaranimesh2004@gmail.com'
+]

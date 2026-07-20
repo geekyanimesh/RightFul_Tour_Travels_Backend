@@ -26,6 +26,7 @@ class Enquiry(models.Model):
     travel_dates = models.CharField(max_length=100)
     number_of_people = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField(max_length=254, default="client@example.com")
 
     def __str__(self):
         return f"{self.name} - {self.package.title}"
@@ -39,6 +40,7 @@ class ContactMessage(models.Model):
     phone = models.CharField(max_length=20)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField(max_length=254, default="client@example.com")
 
     def __str__(self):
         return f"{self.name} - {self.phone}"
@@ -81,3 +83,24 @@ class SiteAnnouncement(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+
+class CustomQuote(models.Model):
+    """Captures custom quote requests."""
+    objects = models.Manager()
+
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=254)
+    phone = models.CharField(max_length=20)
+    service_type = models.CharField(max_length=100)
+    destination = models.CharField(max_length=200, blank=True)
+    travel_date = models.CharField(max_length=100, blank=True)
+    duration = models.CharField(max_length=50, blank=True)
+    adults = models.CharField(max_length=10, default="2")
+    children = models.CharField(max_length=10, default="0")
+    budget = models.CharField(max_length=100, blank=True)
+    message = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.service_type}"

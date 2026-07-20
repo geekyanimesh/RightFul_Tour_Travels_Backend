@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Package, Enquiry, ContactMessage, GalleryImage, Testimonial, SiteAnnouncement
+from .models import Package, Enquiry, ContactMessage, GalleryImage, Testimonial, SiteAnnouncement, CustomQuote
 
 @admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
@@ -37,3 +37,9 @@ class SiteAnnouncementAdmin(admin.ModelAdmin):
     # Allows the client to quickly toggle the pop-up on or off from the list view
     list_editable = ('is_active',)
     list_filter = ('is_active',)
+
+@admin.register(CustomQuote)
+class CustomQuoteAdmin(admin.ModelAdmin):
+    list_display = ('name', 'service_type', 'phone', 'travel_date', 'created_at')
+    search_fields = ('name', 'email', 'phone', 'service_type', 'destination')
+    list_filter = ('service_type', 'created_at')
