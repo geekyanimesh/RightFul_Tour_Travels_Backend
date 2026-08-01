@@ -28,6 +28,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
+RAZORPAY_KEY_ID = os.environ.get('RAZORPAY_KEY_ID')
+RAZORPAY_KEY_SECRET = os.environ.get('RAZORPAY_KEY_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
@@ -165,5 +167,6 @@ DEFAULT_FROM_EMAIL = "onboarding@resend.dev"
 # Because you are using the testing sandbox, it will only deliver emails TO 
 # the email address you used to sign up for Resend.
 ADMIN_NOTIFICATION_EMAILS = [
-    'kumaranimesh2004@gmail.com' 
+    'kumaranimesh2004@gmail.com',
+    'info.rightfultourandtravels@gmail.com'
 ]

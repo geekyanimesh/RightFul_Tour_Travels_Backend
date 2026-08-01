@@ -1,6 +1,11 @@
-from rest_framework import viewsets, generics
-from django.core.mail import EmailMessage
+import razorpay
+from razorpay.errors import SignatureVerificationError
+
 from django.conf import settings
+from rest_framework import viewsets, generics, status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.core.mail import EmailMessage
 from .models import Package, Enquiry, ContactMessage, GalleryImage, Testimonial, SiteAnnouncement, CustomQuote
 from .serializers import (
     PackageSerializer, EnquirySerializer, ContactMessageSerializer, 
@@ -101,3 +106,45 @@ class SubmitCustomQuoteView(generics.CreateAPIView):
             reply_to=[instance.email]
         )
         email.send(fail_silently=False)
+
+# Razorpay Integration
+client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
+@api_view(['POST'])
+def create_order(request):
+    try:
+        amount = int(request.data.get('amount', 0)) * 100 
+        currency = "INR"
+        
+        razorpay_order = client.order.create({  # type: ignore
+            "amount": amount,
+            "currency": currency,
+            "payment_capture": "1"
+        })
+        
+        return Response({
+            'order_id': razorpay_order['id'],
+            'amount': amount,
+            'currency': currency,
+            'key': settings.RAZORPAY_KEY_ID
+        }, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def verify_payment(request):
+    try:
+        payment_id = request.data.get('razorpay_payment_id')
+        order_id = request.data.get('razorpay_order_id')
+        signature = request.data.get('razorpay_signature')
+        
+        params_dict = {
+            'razorpay_order_id': order_id,
+            'razorpay_payment_id': payment_id,
+            'razorpay_signature': signature
+        }
+        
+        client.utility.verify_payment_signature(params_dict)  # type: ignore
+        return Response({'status': 'Payment Verified'}, status=status.HTTP_200_OK)
+    except SignatureVerificationError:
+        return Response({'error': 'Invalid Signature'}, status=status.HTTP_400_BAD_REQUEST)

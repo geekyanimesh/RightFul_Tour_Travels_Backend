@@ -1,4 +1,7 @@
+# models.py
+
 from django.db import models
+from django.utils import timezone
 from cloudinary.models import CloudinaryField
 
 class Package(models.Model):
@@ -11,10 +14,17 @@ class Package(models.Model):
     exclusions = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = CloudinaryField('image')
+    
+    is_flash_sale = models.BooleanField(default=False)
+    discounted_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    flash_sale_end = models.DateTimeField(null=True, blank=True)
+
+    @property
+    def is_active_flash_sale(self):
+        return bool(self.is_flash_sale and self.flash_sale_end and self.flash_sale_end > timezone.now())
 
     def __str__(self):
         return str(self.title)
-
 
 class Enquiry(models.Model):
     """Captures leads specific to a tour package."""
@@ -31,7 +41,6 @@ class Enquiry(models.Model):
     def __str__(self):
         return f"{self.name} - {self.package.title}"
 
-
 class ContactMessage(models.Model):
     """Captures general contact form submissions."""
     objects = models.Manager()
@@ -45,7 +54,6 @@ class ContactMessage(models.Model):
     def __str__(self):
         return f"{self.name} - {self.phone}"
 
-
 class GalleryImage(models.Model):
     """Stores the photo collection for the Gallery page."""
     objects = models.Manager()
@@ -56,7 +64,6 @@ class GalleryImage(models.Model):
 
     def __str__(self):
         return str(self.caption) or "Gallery Image"
-
 
 class Testimonial(models.Model):
     """Stores past client reviews."""
@@ -71,7 +78,6 @@ class Testimonial(models.Model):
     def __str__(self):
         return str(self.name)
 
-
 class SiteAnnouncement(models.Model):
     """Manages the content for the Home Page promotional pop-ups."""
     objects = models.Manager()
@@ -83,7 +89,6 @@ class SiteAnnouncement(models.Model):
 
     def __str__(self):
         return str(self.title)
-
 
 class CustomQuote(models.Model):
     """Captures custom quote requests."""
