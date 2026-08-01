@@ -1,7 +1,11 @@
+# serializers.py
+
 from rest_framework import serializers
 from .models import Package, Enquiry, ContactMessage, GalleryImage, Testimonial, SiteAnnouncement, CustomQuote
 
 class PackageSerializer(serializers.ModelSerializer):
+    is_active_flash_sale = serializers.ReadOnlyField()
+
     class Meta:
         model = Package
         fields = '__all__'
