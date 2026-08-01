@@ -165,5 +165,6 @@ DEFAULT_FROM_EMAIL = "onboarding@resend.dev"
 # Because you are using the testing sandbox, it will only deliver emails TO 
 # the email address you used to sign up for Resend.
 ADMIN_NOTIFICATION_EMAILS = [
-    'kumaranimesh2004@gmail.com' 
+    'kumaranimesh2004@gmail.com',
+    'info.rightfultourandtravels@gmail.com',
 ]
